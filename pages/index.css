@@ -7,7 +7,6 @@
 @import "../blocks/header/__logo/header__logo.css";
 
 @import "../blocks/content/content.css";
-@import "../blocks/content/__screen-size_max/content__screen-size_max.css";
 
 @import "../blocks/profile/profile.css";
 @import "../blocks/profile/__user/profile__user.css";
