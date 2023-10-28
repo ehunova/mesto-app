@@ -1,0 +1,8 @@
+.header {
+    padding: 45px 19px 0;
+    max-width: 880px;
+    width: 100%;
+    border-bottom: solid 1px rgba(84, 84, 84, 0.7);
+    box-sizing: border-box;
+    margin: 0 auto;
+}
