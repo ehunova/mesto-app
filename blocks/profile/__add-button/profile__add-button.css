@@ -9,3 +9,11 @@
     width: 150px;
     height: 50px;
 }
+
+@media screen and (max-width: 780px) {
+    .profile__add-button {
+        width: 100%;
+        min-width: 282px;
+        background-size: contain;
+    }
+}

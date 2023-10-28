@@ -4,3 +4,12 @@
     justify-content: center;
     gap: 16px;
 }
+
+@media screen and (max-width: 620px) {
+    .profile__info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 14px;
+    }
+}

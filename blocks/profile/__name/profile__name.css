@@ -4,3 +4,10 @@
     gap: 18px;
     align-items: baseline;
 }
+
+@media screen and (max-width: 420px) {
+    .profile__name {
+        gap: 10px;
+    }
+}
+

@@ -6,3 +6,10 @@
     font-weight: 400;
     line-height: normal;
 }
+
+@media screen and (max-width: 420px) {
+    .profile__description {
+        font-size: 14px;
+        width: 282px;
+    }
+}

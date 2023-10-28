@@ -2,3 +2,9 @@
     padding-top: 45px;
     border-bottom: solid 1px rgba(84, 84, 84, 0.7);
 }
+
+@media screen and (max-width: 420px) {
+    .header {
+        padding-top: 28px;
+    }
+}
