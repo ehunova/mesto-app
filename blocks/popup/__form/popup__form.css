@@ -4,3 +4,10 @@
     flex-direction: column;
     gap: 48px;
 }
+
+@media screen and (max-width: 420px) {
+    .popup__form {
+        gap: 30px;
+        padding-top: 75px;
+    }
+}

@@ -6,6 +6,7 @@
 @media screen and (max-width: 620px) {
     .profile__user {
         flex-direction: column;
+        justify-content: center;
         align-items: center;
         gap: 22px;
     }

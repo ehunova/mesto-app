@@ -1,0 +1,8 @@
+.link {
+    cursor: pointer;
+    transition: scale .3s ease;
+}
+
+.link:hover {
+    scale: 1.05;
+}

@@ -1,4 +1,4 @@
-.page__screen-size_max {
+.page__section {
     max-width: 880px;
     width: 100%;
     margin: 0 auto;
@@ -6,7 +6,7 @@
 }
 
 @media screen and (max-width: 1023px) {
-    .page__screen-size_max {
+    .page__section {
         padding-left: 19px;
         padding-right: 19px;
     }

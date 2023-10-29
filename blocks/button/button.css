@@ -1,8 +1,8 @@
 .button {
     cursor: pointer;
-    transition: opacity .2s ease;
+    transition: background-color .2s ease;
 }
 
 .button:hover {
-    opacity: .8;
+    background-color: rgba(0, 0, 0, 0.8);
 }

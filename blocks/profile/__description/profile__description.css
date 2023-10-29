@@ -1,15 +1,18 @@
 .profile__description {
     margin: 0;
     padding: 0;
-    width: 336px;
+    max-width: 336px;
     font-size: 18px;
     font-weight: 400;
     line-height: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 420px) {
     .profile__description {
         font-size: 14px;
-        width: 282px;
+        max-width: 282px;
     }
 }

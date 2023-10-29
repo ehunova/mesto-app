@@ -1,9 +1,10 @@
 @import "../vendor/normalize.css";
 @import "../fonts/fonts.css";
 @import "../blocks/page/page.css";
-@import "../blocks/page/__screen-size_max/page__screen-size_max.css";
+@import "../blocks/page/__section/page__section.css";
 @import "../blocks/icon-button/icon-button.css";
 @import "../blocks/button/button.css";
+@import "../blocks/link/link.css";
 
 @import "../blocks/header/header.css";
 @import "../blocks/header/__logo/header__logo.css";
