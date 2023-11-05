@@ -6,6 +6,11 @@ const saveProfilePopup = editProfilePopup.querySelector('.popup__form');
 const nameProfile = document.querySelector('.profile__name-text');
 const descriptionProfile = document.querySelector('.profile__description');
 
+const addCardButton = document.querySelector('.profile__add-button');
+const addCardPopup = document.querySelector('#add-card');
+const closeAddCardPopup = addCardPopup.querySelector('.popup__close-button');
+
+
 function openPopup(popupItem) {
     popupItem.classList.add('popup_opened');
 }
@@ -45,3 +50,10 @@ saveProfilePopup.addEventListener('submit', function(event) {
     closePopup(editProfilePopup);
 });
 
+addCardButton.addEventListener('click', function () {
+    openPopup(addCardPopup);
+});
+
+closeAddCardPopup.addEventListener('click', function () {
+    closePopup(addCardPopup);
+});
