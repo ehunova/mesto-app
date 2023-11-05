@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./pages/index.css">
+    <script src="./index.js" defer></script>
     <title>Mesto</title>
 </head>
 <body>
@@ -93,13 +94,13 @@
         <p class="footer__copyright">&COPY; 2020 Mesto Russia</p>
     </footer>
 
-    <div class="popup">
+    <div class="popup" id="edit-profile">
         <div class="popup__container">
             <button class="popup__close-button icon-button" type="button" aria-label="Close"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__form" name="edit_profile">
-                <input class="popup__input" type="text" name="name" placeholder="Ваше имя" value="Жак-Ив Кусто">
-                <input class="popup__input" type="text" name="description" placeholder="Описание профиля" value="Исследователь океана">
+            <form class="popup__form" name="edit-info">
+                <input class="popup__input" id="profile-name" type="text" name="name" placeholder="Ваше имя">
+                <input class="popup__input"  id="description" type="text" name="description" placeholder="Описание профиля">
                 <button class="popup__save-button button" type="submit">Сохранить</button>
             </form>
         </div>
