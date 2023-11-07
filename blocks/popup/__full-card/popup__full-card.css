@@ -1,0 +1,8 @@
+.popup__full-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}

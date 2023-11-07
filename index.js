@@ -11,6 +11,9 @@ const addCardPopup = document.getElementById('add-card');
 const closeAddCardPopup = addCardPopup.querySelector('.popup__close-button');
 const saveCardForm = addCardPopup.querySelector('.popup__form');
 
+const fullCardPopup = document.getElementById('full-card');
+const closeFullCardPopup = fullCardPopup.querySelector('.popup__close-button');
+
 const cardTemplate = document.getElementById('card-template').content.querySelector('.card');
 const cardsBlock = document.querySelector('.cards__list');
 
@@ -57,16 +60,35 @@ function createNewCard(card) {
     const deleteCard = newCard.querySelector('.card__delete-button');
     const likeCard = newCard.querySelector('.card__like-button');
 
+    const fullImagePlace = fullCardPopup.querySelector('.popup__image');
+    const fullNamePlace = fullCardPopup.querySelector('.popup__caption');
+
     namePlace.textContent = card.name;
     imagePlace.src = card.link;
+    imagePlace.alt = card.name;
 
-    imagePlace.addEventListener('click', function() {
-        openPopup();
+    imagePlace.addEventListener('click', (event) => {
+        event.target.closest('.card');
+        fullImagePlace.src = card.link;
+        fullImagePlace.alt = card.name;
+        fullNamePlace.textContent = card.name;
+        openPopup(fullCardPopup);
     });
 
-    likeCard.addEventListener('click', () => likeCard.classList.toggle('card__like-button_active'));
+    closeFullCardPopup.addEventListener('click', (event) => {
+        event.target.closest('.card');
+        closePopup(fullCardPopup);
+    });
 
-    deleteCard.addEventListener('click', () => newCard.remove());
+    likeCard.addEventListener('click', (event) => {
+        event.target.closest('.card');
+        likeCard.classList.toggle('card__like-button_active')
+    });
+
+    deleteCard.addEventListener('click', (event) => {
+        event.target.closest('.card');
+        newCard.remove();
+    });
 
     return newCard;
 }

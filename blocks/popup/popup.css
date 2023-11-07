@@ -14,3 +14,7 @@
     transition: visibility .3s ease, opacity .3s ease;
     opacity: 0;
 }
+
+#full-card {
+    background-color: rgba(0, 0, 0, 0.9);
+}
