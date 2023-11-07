@@ -1,5 +1,5 @@
 const editProfileButton = document.querySelector('.profile__edit-button');
-const editProfilePopup = document.querySelector('#edit-profile');
+const editProfilePopup = document.getElementById('edit-profile');
 const closeProfilePopup = editProfilePopup.querySelector('.popup__close-button');
 const saveProfileForm = editProfilePopup.querySelector('.popup__form');
 
@@ -7,9 +7,12 @@ const nameProfile = document.querySelector('.profile__name-text');
 const descriptionProfile = document.querySelector('.profile__description');
 
 const addCardButton = document.querySelector('.profile__add-button');
-const addCardPopup = document.querySelector('#add-card');
+const addCardPopup = document.getElementById('add-card');
 const closeAddCardPopup = addCardPopup.querySelector('.popup__close-button');
 const saveCardForm = addCardPopup.querySelector('.popup__form');
+
+const cardTemplate = document.getElementById('card-template').content.querySelector('.card');
+const cardsBlock = document.querySelector('.cards__list');
 
 const cardsList = [
     {
@@ -38,25 +41,32 @@ const cardsList = [
     }
 ];
 
-const cardTemplate = document.getElementById('card-template').content.querySelector('.card');
-const cardsBlock = document.querySelector('.cards__list');
-
 function updateCardsList() {
     const namePlaceInput = saveCardForm.querySelector('#card-name');
     const linkPlaceInput = saveCardForm.querySelector('#card-link');
+    const card = {name: namePlaceInput.value, link: linkPlaceInput.value};
 
-    cardsList.push({name: namePlaceInput.value, link: linkPlaceInput.value});
-    addNewCard(createNewCard(namePlaceInput.value, linkPlaceInput.value));
+    addNewCard(createNewCard(card));
 }
 
-function createNewCard(name, link) {
+function createNewCard(card) {
     const newCard = cardTemplate.cloneNode(true);
 
     const namePlace = newCard.querySelector('.card__title');
     const imagePlace = newCard.querySelector('.card__image');
+    const deleteCard = newCard.querySelector('.card__delete-button');
+    const likeCard = newCard.querySelector('.card__like-button');
 
-    namePlace.textContent = name;
-    imagePlace.src = link;
+    namePlace.textContent = card.name;
+    imagePlace.src = card.link;
+
+    imagePlace.addEventListener('click', function() {
+        openPopup();
+    });
+
+    likeCard.addEventListener('click', () => likeCard.classList.toggle('card__like-button_active'));
+
+    deleteCard.addEventListener('click', () => newCard.remove());
 
     return newCard;
 }
@@ -65,20 +75,17 @@ function addNewCard(card) {
     cardsBlock.prepend(card);
 }
 
-cardsList.forEach(card => {
-    const newCard = createNewCard(card.name, card.link);
-    addNewCard(newCard);
+cardsList.reverse().forEach(card => {
+    addNewCard(createNewCard(card));
 });
 
 saveCardForm.addEventListener('submit', function (event) {
     event.preventDefault();
     updateCardsList();
+    saveCardForm.reset();
 
     closePopup(addCardPopup);
 });
-
-
-
 
 function openPopup(popupItem) {
     popupItem.classList.add('popup_opened');
