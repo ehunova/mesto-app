@@ -6,3 +6,10 @@
 .button:hover {
     background-color: rgba(0, 0, 0, 0.8);
 }
+
+.button:disabled {
+    cursor: auto;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid #C4C4C4;
+    color: #C4C4C4;
+}
