@@ -1,11 +1,5 @@
 function openPopup(popupItem) {
     popupItem.classList.add('popup_opened');
-
-    popupItem.addEventListener('mousedown', (event) => {
-        if (event.target.classList.contains('popup')) {
-            closePopup(popupItem);
-        }
-    })
 }
 
 function closePopup(popupItem) {
@@ -19,7 +13,23 @@ function closePopupOnEscape(event) {
     }
 }
 
+function setEventListenerOnPopup() {
+    const popupList = Array.from(document.querySelectorAll('.popup'));
+
+    popupList.forEach(popupItem => {
+        closePopupOnOverlay(popupItem);
+    })
+}
+
+function closePopupOnOverlay(popupItem) {
+    popupItem.addEventListener('mousedown', (event) => {
+        if (event.target.classList.contains('popup')) {
+            closePopup(popupItem);
+        }
+    })
+}
+
 export {
     openPopup, closePopup,
-    closePopupOnEscape,
+    closePopupOnEscape, setEventListenerOnPopup,
 };

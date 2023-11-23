@@ -1,7 +1,8 @@
 import './pages/index.css';
 
 import {
-    openPopup, closePopup, closePopupOnEscape,
+    openPopup, closePopup,
+    closePopupOnEscape, setEventListenerOnPopup,
 } from './components/modal.js';
 
 import {
@@ -62,6 +63,7 @@ function updateProfile() {
 }
 
 buttonOpenPopupProfile.addEventListener('click', function () {
+    fillFormSaveProfile();
     openPopup(popupProfile);
 });
 
@@ -84,5 +86,5 @@ buttonClosePopupFullCard.addEventListener('click', (event) => {
 
 document.addEventListener('keydown', closePopupOnEscape);
 
-fillFormSaveProfile();
+setEventListenerOnPopup();
 enableValidation(validationConfig);
