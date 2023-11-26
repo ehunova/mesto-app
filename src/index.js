@@ -34,7 +34,10 @@ const formSaveCard = popupAddCard.querySelector('.popup__form');
 const cardsBlock = document.querySelector('.cards__list');
 const inputNamePlace = formSaveCard.querySelector('#card-name');
 const inputLinkPlace = formSaveCard.querySelector('#card-link');
+
 const popupFullCard = document.getElementById('full-card');
+const fullImagePlace = popupFullCard.querySelector('.popup__image');
+const fullNamePlace = popupFullCard.querySelector('.popup__caption');
 
 formSaveCard.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -81,12 +84,10 @@ cardsList.reverse().forEach(card => {
 });
 
 function openPopupFullCard(card) {
-    const fullImagePlace = popupFullCard.querySelector('.popup__image');
-    const fullNamePlace = popupFullCard.querySelector('.popup__caption');
-
     fullImagePlace.src = card.link;
     fullImagePlace.alt = card.name;
     fullNamePlace.textContent = card.name;
+
     openPopup(popupFullCard);
 }
 

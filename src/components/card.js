@@ -12,17 +12,14 @@ function createNewCard(card, openPopupFullCard) {
     imagePlace.src = card.link;
     imagePlace.alt = card.name;
 
-    imagePlace.addEventListener('click', () => {
-        openPopupFullCard(card);
-    });
+    imagePlace.addEventListener('click', () => openPopupFullCard(card));
 
-    buttonLikeCard.addEventListener('click', (event) => {
-        buttonLikeCard.classList.toggle('card__like-button_active')
-    });
+    buttonLikeCard.addEventListener(
+        'click',
+        () => buttonLikeCard.classList.toggle('card__like-button_active')
+    );
 
-    buttonDeleteCard.addEventListener('click', (event) => {
-        newCard.remove();
-    });
+    buttonDeleteCard.addEventListener('click', () => newCard.remove());
 
     return newCard;
 }
