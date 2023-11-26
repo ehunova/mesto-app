@@ -1,6 +1,6 @@
 const cardTemplate = document.getElementById('card-template').content.querySelector('.card');
 
-function createNewCard(card, openPopupFullCard) {
+function createNewCard(card, onImagePlaceClicked, onButtonDeleteCardClicked) {
     const newCard = cardTemplate.cloneNode(true);
 
     const namePlace = newCard.querySelector('.card__title');
@@ -12,14 +12,19 @@ function createNewCard(card, openPopupFullCard) {
     imagePlace.src = card.link;
     imagePlace.alt = card.name;
 
-    imagePlace.addEventListener('click', () => openPopupFullCard(card));
+    imagePlace.addEventListener('click', () => onImagePlaceClicked(card));
 
     buttonLikeCard.addEventListener(
         'click',
         () => buttonLikeCard.classList.toggle('card__like-button_active')
     );
 
-    buttonDeleteCard.addEventListener('click', () => newCard.remove());
+    buttonDeleteCard.addEventListener('click', (event) => {
+        event.preventDefault();
+        onButtonDeleteCardClicked(() => {
+            newCard.remove();
+        })
+    });
 
     return newCard;
 }

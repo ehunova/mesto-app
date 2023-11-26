@@ -1,0 +1,9 @@
+.popup__form_without-inputs {
+    padding-top: 0;
+}
+
+@media screen and (max-width: 420px) {
+    .popup__form {
+        padding-top: 20px;
+    }
+}

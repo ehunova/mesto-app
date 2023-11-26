@@ -40,6 +40,7 @@
 @import "../blocks/popup/__close-button/popup__close-button.css";
 @import "../blocks/popup/__title/popup__title.css";
 @import "../blocks/popup/__form/popup__form.css";
+@import "../blocks/popup/__form/_without-inputs/popup__form_without-inputs.css";
 @import "../blocks/popup/__input/popup__input.css";
 @import "../blocks/popup/__input/_error/popup__input_error.css";
 @import "../blocks/popup/__text-error/popup__text-error.css";

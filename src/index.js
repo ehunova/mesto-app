@@ -1,9 +1,6 @@
 import './pages/index.css';
 
-import {
-    closePopup, openPopup,
-    setEventListenerOnPopup,
-} from './components/modal.js';
+import {closePopup, openPopup, setEventListenerOnPopup,} from './components/modal.js';
 
 import {createNewCard} from './components/card.js';
 
@@ -39,11 +36,14 @@ const popupFullCard = document.getElementById('full-card');
 const fullImagePlace = popupFullCard.querySelector('.popup__image');
 const fullNamePlace = popupFullCard.querySelector('.popup__caption');
 
+const popupConfirm = document.getElementById('confirm');
+const formConfirm = popupConfirm.querySelector('.popup__form');
+
 formSaveCard.addEventListener('submit', function (event) {
     event.preventDefault();
 
     const card = {name: inputNamePlace.value, link: inputLinkPlace.value};
-    addNewCard(createNewCard(card, openPopupFullCard));
+    addNewCard(card);
 
     formSaveCard.reset();
     event.submitter.disabled = true;
@@ -73,12 +73,15 @@ buttonAddCard.addEventListener('click', function () {
     openPopup(popupAddCard);
 });
 
-function addNewCard(card) {
-    cardsBlock.prepend(card);
-}
 cardsList.reverse().forEach(card => {
-    addNewCard(createNewCard(card, openPopupFullCard));
+    addNewCard(card);
 });
+
+function addNewCard(card) {
+    cardsBlock.prepend(
+        createNewCard(card, openPopupFullCard, openPopupConfirm)
+    );
+}
 
 function openPopupFullCard(card) {
     fullImagePlace.src = card.link;
@@ -86,6 +89,18 @@ function openPopupFullCard(card) {
     fullNamePlace.textContent = card.name;
 
     openPopup(popupFullCard);
+}
+
+function openPopupConfirm(onConfirm) {
+    const confirmInput = formConfirm.querySelector('.popup__save-button');
+    openPopup(popupConfirm);
+    setTimeout(() => confirmInput.focus(), 100);
+
+    formConfirm.onsubmit = (event) => {
+        event.preventDefault();
+        onConfirm();
+        closePopup(popupConfirm);
+    };
 }
 
 setEventListenerOnPopup();
