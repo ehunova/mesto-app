@@ -53,18 +53,15 @@ formSaveCard.addEventListener('submit', function (event) {
 
 formSaveProfile.addEventListener('submit', function (event) {
     event.preventDefault();
-    updateProfile();
+    nameProfile.textContent = inputNameProfile.value;
+    descriptionProfile.textContent = inputDescriptionProfile.value;
+
     closePopup(popupProfile);
 });
 
 function fillFormSaveProfile() {
     inputNameProfile.value = nameProfile.textContent;
     inputDescriptionProfile.value = descriptionProfile.textContent;
-}
-
-function updateProfile() {
-    nameProfile.textContent = inputNameProfile.value;
-    descriptionProfile.textContent = inputDescriptionProfile.value;
 }
 
 buttonOpenPopupProfile.addEventListener('click', function () {
