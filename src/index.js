@@ -29,8 +29,6 @@ const buttonAddCard = document.querySelector('.profile__add-button');
 const popupAddCard = document.getElementById('add-card');
 const formSaveCard = popupAddCard.querySelector('.popup__form');
 const cardsBlock = document.querySelector('.cards__list');
-const inputNamePlace = formSaveCard.querySelector('#card-name');
-const inputLinkPlace = formSaveCard.querySelector('#card-link');
 
 const popupFullCard = document.getElementById('full-card');
 const fullImagePlace = popupFullCard.querySelector('.popup__image');
@@ -47,10 +45,9 @@ const avatarProfile = document.querySelector('.profile__avatar');
 formSaveCard.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const card = {name: inputNamePlace.value, link: inputLinkPlace.value};
-    addNewCard(card);
+    addNewCard({name: this.elements.title.value, link: this.elements.link.value});
 
-    formSaveCard.reset();
+    this.reset();
     event.submitter.disabled = true;
 
     closePopup(popupAddCard);
@@ -58,8 +55,8 @@ formSaveCard.addEventListener('submit', function (event) {
 
 formSaveProfile.addEventListener('submit', function (event) {
     event.preventDefault();
-    nameProfile.textContent = inputNameProfile.value;
-    descriptionProfile.textContent = inputDescriptionProfile.value;
+    nameProfile.textContent = this.elements.name.value;
+    descriptionProfile.textContent = this.elements.description.value;
 
     closePopup(popupProfile);
 });
