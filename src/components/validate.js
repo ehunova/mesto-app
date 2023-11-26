@@ -8,28 +8,18 @@ export function enableValidation(validationConfig) {
 function setEventListeners(formElement, validationConfig) {
     const inputFormList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
     const buttonSubmit = formElement.querySelector(validationConfig.submitButtonSelector);
-    toggleButtonState(inputFormList, buttonSubmit);
+    toggleButtonState(formElement, buttonSubmit);
 
     inputFormList.forEach(inputElement => {
         inputElement.addEventListener('input', () => {
             checkValidity(formElement, inputElement, validationConfig);
-            toggleButtonState(inputFormList, buttonSubmit);
+            toggleButtonState(formElement, buttonSubmit);
         })
     });
 }
 
-function hasInvalidInput(inputList) {
-    return inputList.some(inputElement => {
-        return !inputElement.validity.valid;
-    })
-}
-
-function toggleButtonState(inputList, buttonElement) {
-    if(hasInvalidInput(inputList)) {
-        buttonElement.disabled = true;
-    } else {
-        buttonElement.disabled = false;
-    }
+function toggleButtonState(formElement, buttonElement) {
+    buttonElement.disabled = !formElement.checkValidity();
 }
 
 function checkValidity(formElement, inputElement, validationConfig) {
