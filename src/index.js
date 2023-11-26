@@ -1,18 +1,10 @@
 import './pages/index.css';
 
-import {
-    openPopup, closePopup,
-    closePopupOnEscape, setEventListenerOnPopup,
-} from './components/modal.js';
+import {closePopup, openPopup, setEventListenerOnPopup,} from './components/modal.js';
 
-import {
-    updateCardsList, buttonClosePopupAddCard,
-    popupAddCard, popupFullCard, formSaveCard
-} from './components/card.js';
+import {createNewCard, formSaveCard, popupAddCard, updateCardsList} from './components/card.js';
 
-import {
-    enableValidation,
-} from './components/validate.js';
+import {enableValidation,} from './components/validate.js';
 
 const validationConfig = {
     formSelector: '.popup__form',
@@ -23,7 +15,6 @@ const validationConfig = {
 
 const buttonOpenPopupProfile = document.querySelector('.profile__edit-button');
 const popupProfile = document.getElementById('edit-profile');
-const buttonClosePopupProfile = popupProfile.querySelector('.popup__close-button');
 const formSaveProfile = popupProfile.querySelector('.popup__form');
 
 const nameProfile = document.querySelector('.profile__name-text');
@@ -32,16 +23,12 @@ const inputNameProfile = formSaveProfile.querySelector('#profile-name');
 const inputDescriptionProfile = formSaveProfile.querySelector('#description');
 
 const buttonAddCard = document.querySelector('.profile__add-button');
-const buttonClosePopupFullCard = popupFullCard.querySelector('.popup__close-button');
 
 formSaveCard.addEventListener('submit', function (event) {
     event.preventDefault();
     updateCardsList();
     formSaveCard.reset();
-
-    const buttonElement = formSaveCard.querySelector(validationConfig.submitButtonSelector);
-    buttonElement.disabled = true;
-
+    event.submitter.disabled = true;
 
     closePopup(popupAddCard);
 });
@@ -67,24 +54,9 @@ buttonOpenPopupProfile.addEventListener('click', function () {
     openPopup(popupProfile);
 });
 
-buttonClosePopupProfile.addEventListener('click', function () {
-    closePopup(popupProfile);
-});
-
 buttonAddCard.addEventListener('click', function () {
     openPopup(popupAddCard);
 });
-
-buttonClosePopupAddCard.addEventListener('click', function () {
-    closePopup(popupAddCard);
-});
-
-buttonClosePopupFullCard.addEventListener('click', (event) => {
-    event.target.closest('.card');
-    closePopup(popupFullCard);
-});
-
-document.addEventListener('keydown', closePopupOnEscape);
 
 setEventListenerOnPopup();
 enableValidation(validationConfig);

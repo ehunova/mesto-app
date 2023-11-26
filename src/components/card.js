@@ -1,7 +1,6 @@
 import { openPopup } from './modal.js';
 
 const popupAddCard = document.getElementById('add-card');
-const buttonClosePopupAddCard = popupAddCard.querySelector('.popup__close-button');
 const formSaveCard = popupAddCard.querySelector('.popup__form');
 const popupFullCard = document.getElementById('full-card');
 
@@ -86,8 +85,9 @@ cardsList.reverse().forEach(card => {
 });
 
 export {
-    updateCardsList, buttonClosePopupAddCard,
-    popupAddCard, formSaveCard, popupFullCard,
+    updateCardsList,
+    popupAddCard, formSaveCard,
+    popupFullCard,
 }
 
 
