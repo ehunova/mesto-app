@@ -39,6 +39,11 @@ const fullNamePlace = popupFullCard.querySelector('.popup__caption');
 const popupConfirm = document.getElementById('confirm');
 const formConfirm = popupConfirm.querySelector('.popup__form');
 
+const popupProfileAvatar = document.getElementById('profile-avatar');
+const formSaveProfileAvatar = popupProfileAvatar.querySelector('.popup__form');
+const buttonOpenPopupAvatar = document.querySelector('.profile__avatar_edit-button');
+const avatarProfile = document.querySelector('.profile__avatar');
+
 formSaveCard.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -59,6 +64,14 @@ formSaveProfile.addEventListener('submit', function (event) {
     closePopup(popupProfile);
 });
 
+formSaveProfileAvatar.addEventListener('submit', function (event) {
+    event.preventDefault();
+    avatarProfile.src = this.elements.imageUrl.value;
+    this.reset();
+
+    closePopup(popupProfileAvatar);
+})
+
 function fillFormSaveProfile() {
     inputNameProfile.value = nameProfile.textContent;
     inputDescriptionProfile.value = descriptionProfile.textContent;
@@ -69,9 +82,9 @@ buttonOpenPopupProfile.addEventListener('click', function () {
     openPopup(popupProfile);
 });
 
-buttonAddCard.addEventListener('click', function () {
-    openPopup(popupAddCard);
-});
+buttonOpenPopupAvatar.addEventListener('click', () => openPopup(popupProfileAvatar));
+
+buttonAddCard.addEventListener('click', () => openPopup(popupAddCard));
 
 cardsList.reverse().forEach(card => {
     addNewCard(card);
