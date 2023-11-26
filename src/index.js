@@ -1,10 +1,15 @@
 import './pages/index.css';
 
-import {closePopup, openPopup, setEventListenerOnPopup,} from './components/modal.js';
+import {
+    closePopup, openPopup,
+    setEventListenerOnPopup,
+} from './components/modal.js';
 
-import {createNewCard, formSaveCard, popupAddCard, updateCardsList} from './components/card.js';
+import {createNewCard} from './components/card.js';
 
-import {enableValidation,} from './components/validate.js';
+import {enableValidation} from './components/validate.js';
+
+import {cardsList} from './components/cards.js';
 
 const validationConfig = {
     formSelector: '.popup__form',
@@ -24,9 +29,19 @@ const inputDescriptionProfile = formSaveProfile.querySelector('#description');
 
 const buttonAddCard = document.querySelector('.profile__add-button');
 
+const popupAddCard = document.getElementById('add-card');
+const formSaveCard = popupAddCard.querySelector('.popup__form');
+const cardsBlock = document.querySelector('.cards__list');
+const inputNamePlace = formSaveCard.querySelector('#card-name');
+const inputLinkPlace = formSaveCard.querySelector('#card-link');
+const popupFullCard = document.getElementById('full-card');
+
 formSaveCard.addEventListener('submit', function (event) {
     event.preventDefault();
-    updateCardsList();
+
+    const card = {name: inputNamePlace.value, link: inputLinkPlace.value};
+    addNewCard(createNewCard(card, openPopupFullCard));
+
     formSaveCard.reset();
     event.submitter.disabled = true;
 
@@ -57,6 +72,23 @@ buttonOpenPopupProfile.addEventListener('click', function () {
 buttonAddCard.addEventListener('click', function () {
     openPopup(popupAddCard);
 });
+
+function addNewCard(card) {
+    cardsBlock.prepend(card);
+}
+cardsList.reverse().forEach(card => {
+    addNewCard(createNewCard(card, openPopupFullCard));
+});
+
+function openPopupFullCard(card) {
+    const fullImagePlace = popupFullCard.querySelector('.popup__image');
+    const fullNamePlace = popupFullCard.querySelector('.popup__caption');
+
+    fullImagePlace.src = card.link;
+    fullImagePlace.alt = card.name;
+    fullNamePlace.textContent = card.name;
+    openPopup(popupFullCard);
+}
 
 setEventListenerOnPopup();
 enableValidation(validationConfig);
