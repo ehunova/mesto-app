@@ -8,6 +8,8 @@ import {enableValidation} from './components/validate.js';
 
 import {cardsList} from './components/cards.js';
 
+import {getRequestUserInfo, patchRequestUserAvatar, patchRequestUserInfo} from './components/api.js';
+
 const validationConfig = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
@@ -42,6 +44,18 @@ const formSaveProfileAvatar = popupProfileAvatar.querySelector('.popup__form');
 const buttonOpenPopupAvatar = document.querySelector('.profile__avatar_edit-button');
 const avatarProfile = document.querySelector('.profile__avatar');
 
+let globalUserInfo = {};
+
+function loadUserInfo() {
+    getRequestUserInfo()
+        .then(userInfo => {
+            globalUserInfo = userInfo;
+            nameProfile.textContent = userInfo.name;
+            descriptionProfile.textContent = userInfo.about;
+            avatarProfile.src = userInfo.avatar;
+        })
+}
+
 formSaveCard.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -55,16 +69,27 @@ formSaveCard.addEventListener('submit', function (event) {
 
 formSaveProfile.addEventListener('submit', function (event) {
     event.preventDefault();
-    nameProfile.textContent = this.elements.name.value;
-    descriptionProfile.textContent = this.elements.description.value;
+    patchRequestUserInfo( {
+        name: this.elements.name.value,
+        about: this.elements.description.value
+    })
+        .then(() => {
+            nameProfile.textContent = this.elements.name.value;
+            descriptionProfile.textContent = this.elements.description.value;
+        })
 
     closePopup(popupProfile);
 });
 
 formSaveProfileAvatar.addEventListener('submit', function (event) {
     event.preventDefault();
-    avatarProfile.src = this.elements.imageUrl.value;
-    this.reset();
+    patchRequestUserAvatar({
+        avatar: this.elements.imageUrl.value
+    })
+        .then(() => {
+            avatarProfile.src = this.elements.imageUrl.value;
+            this.reset();
+        });
 
     closePopup(popupProfileAvatar);
 })
@@ -115,3 +140,5 @@ function openPopupConfirm(onConfirm) {
 
 setEventListenerOnPopup();
 enableValidation(validationConfig);
+
+loadUserInfo();
