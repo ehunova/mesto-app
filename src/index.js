@@ -6,9 +6,10 @@ import {createNewCard} from './components/card.js';
 
 import {enableValidation} from './components/validate.js';
 
-import {cardsList} from './components/cards.js';
-
-import {getRequestUserInfo, patchRequestUserAvatar, patchRequestUserInfo} from './components/api.js';
+import {
+    getRequestUserInfo, patchRequestUserAvatar, patchRequestUserInfo,
+    getRequestCards, postRequestCard, deleteRequestCard,
+} from './components/api.js';
 
 const validationConfig = {
     formSelector: '.popup__form',
@@ -45,6 +46,7 @@ const buttonOpenPopupAvatar = document.querySelector('.profile__avatar_edit-butt
 const avatarProfile = document.querySelector('.profile__avatar');
 
 let globalUserInfo = {};
+let globalCardsList = [];
 
 function loadUserInfo() {
     getRequestUserInfo()
@@ -53,6 +55,22 @@ function loadUserInfo() {
             nameProfile.textContent = userInfo.name;
             descriptionProfile.textContent = userInfo.about;
             avatarProfile.src = userInfo.avatar;
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+}
+
+function loadCardsList() {
+    getRequestCards()
+        .then(cardsList => {
+            globalCardsList = cardsList;
+            cardsList.reverse().forEach(card => {
+                addNewCard(card);
+            });
+        })
+        .catch((error) => {
+            console.error(error);
         })
 }
 
@@ -69,13 +87,22 @@ formSaveCard.addEventListener('submit', function (event) {
     event.preventDefault();
     renderLoading(true, event.submitter);
 
-    addNewCard({name: this.elements.title.value, link: this.elements.link.value});
-
-    this.reset();
-    event.submitter.disabled = true;
-
-    renderLoading(false, event.submitter);
-    closePopup(popupAddCard);
+    postRequestCard({
+        name: this.elements.title.value,
+        link: this.elements.link.value
+    })
+        .then((card) => {
+            addNewCard(card);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+        .finally(() => {
+            this.reset();
+            event.submitter.disabled = true;
+            renderLoading(false, event.submitter);
+            closePopup(popupAddCard);
+        })
 });
 
 formSaveProfile.addEventListener('submit', function (event) {
@@ -86,9 +113,12 @@ formSaveProfile.addEventListener('submit', function (event) {
         name: this.elements.name.value,
         about: this.elements.description.value
     })
-        .then(() => {
-            nameProfile.textContent = this.elements.name.value;
-            descriptionProfile.textContent = this.elements.description.value;
+        .then((userInfo) => {
+            nameProfile.textContent = userInfo.name;
+            descriptionProfile.textContent = userInfo.about;
+        })
+        .catch((error) => {
+            console.error(error);
         })
         .finally(() => {
             renderLoading(false, event.submitter);
@@ -103,8 +133,11 @@ formSaveProfileAvatar.addEventListener('submit', function (event) {
     patchRequestUserAvatar({
         avatar: this.elements.imageUrl.value
     })
-        .then(() => {
-            avatarProfile.src = this.elements.imageUrl.value;
+        .then((userInfo) => {
+            avatarProfile.src = userInfo.avatar;
+        })
+        .catch((error) => {
+            console.error(error);
         })
         .finally(() => {
             this.reset();
@@ -128,13 +161,9 @@ buttonOpenPopupAvatar.addEventListener('click', () => openPopup(popupProfileAvat
 
 buttonAddCard.addEventListener('click', () => openPopup(popupAddCard));
 
-cardsList.reverse().forEach(card => {
-    addNewCard(card);
-});
-
 function addNewCard(card) {
     cardsBlock.prepend(
-        createNewCard(card, openPopupFullCard, openPopupConfirm)
+        createNewCard(card, openPopupFullCard, openPopupConfirm, globalUserInfo._id)
     );
 }
 
@@ -162,3 +191,4 @@ setEventListenerOnPopup();
 enableValidation(validationConfig);
 
 loadUserInfo();
+loadCardsList();

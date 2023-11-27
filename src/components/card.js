@@ -1,6 +1,8 @@
+import {deleteRequestCard} from "./api";
+
 const cardTemplate = document.getElementById('card-template').content.querySelector('.card');
 
-function createNewCard(card, onImagePlaceClicked, onButtonDeleteCardClicked) {
+function createNewCard(card, onImagePlaceClicked, onButtonDeleteCardClicked, myId) {
     const newCard = cardTemplate.cloneNode(true);
 
     const namePlace = newCard.querySelector('.card__title');
@@ -12,6 +14,10 @@ function createNewCard(card, onImagePlaceClicked, onButtonDeleteCardClicked) {
     imagePlace.src = card.link;
     imagePlace.alt = card.name;
 
+    if(card.owner._id !== myId) {
+        buttonDeleteCard.remove();
+    }
+
     imagePlace.addEventListener('click', () => onImagePlaceClicked(card));
 
     buttonLikeCard.addEventListener(
@@ -22,13 +28,17 @@ function createNewCard(card, onImagePlaceClicked, onButtonDeleteCardClicked) {
     buttonDeleteCard.addEventListener('click', (event) => {
         event.preventDefault();
         onButtonDeleteCardClicked(() => {
-            newCard.remove();
+            deleteRequestCard(card)
+                .then(() => {
+                    newCard.remove();
+                })
+                .catch((error) => console.error(error))
         })
     });
 
     return newCard;
 }
 
-export {createNewCard}
+export {createNewCard};
 
 
