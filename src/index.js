@@ -56,19 +56,32 @@ function loadUserInfo() {
         })
 }
 
+function renderLoading(isLoading, element) {
+    element.textContent = 'Сохранить';
+
+    if (isLoading) {
+        element.textContent = 'Сохраняем...';
+        element.disabled = true;
+    }
+}
+
 formSaveCard.addEventListener('submit', function (event) {
     event.preventDefault();
+    renderLoading(true, event.submitter);
 
     addNewCard({name: this.elements.title.value, link: this.elements.link.value});
 
     this.reset();
     event.submitter.disabled = true;
 
+    renderLoading(false, event.submitter);
     closePopup(popupAddCard);
 });
 
 formSaveProfile.addEventListener('submit', function (event) {
     event.preventDefault();
+    renderLoading(true, event.submitter);
+
     patchRequestUserInfo( {
         name: this.elements.name.value,
         about: this.elements.description.value
@@ -77,21 +90,28 @@ formSaveProfile.addEventListener('submit', function (event) {
             nameProfile.textContent = this.elements.name.value;
             descriptionProfile.textContent = this.elements.description.value;
         })
-
-    closePopup(popupProfile);
+        .finally(() => {
+            renderLoading(false, event.submitter);
+            closePopup(popupProfile);
+        })
 });
 
 formSaveProfileAvatar.addEventListener('submit', function (event) {
     event.preventDefault();
+    renderLoading(true, event.submitter);
+
     patchRequestUserAvatar({
         avatar: this.elements.imageUrl.value
     })
         .then(() => {
             avatarProfile.src = this.elements.imageUrl.value;
+        })
+        .finally(() => {
             this.reset();
-        });
-
-    closePopup(popupProfileAvatar);
+            event.submitter.disabled = true;
+            renderLoading(false, event.submitter);
+            closePopup(popupProfileAvatar);
+        })
 })
 
 function fillFormSaveProfile() {
