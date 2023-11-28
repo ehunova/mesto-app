@@ -31,14 +31,14 @@ function createNewCard(card, onImagePlaceClicked, onButtonDeleteCardClicked, myI
                         buttonLikeCard.classList.remove('card__like-button_active');
                         likeCounter.textContent = result.likes.length;
                     })
-                    .catch((error) => console.error(error))
+                    .catch(console.error)
             } else {
                 putRequestLike(card)
                     .then((result) => {
                         buttonLikeCard.classList.add('card__like-button_active');
                         likeCounter.textContent = result.likes.length;
                     })
-                    .catch((error) => console.error(error))
+                    .catch(console.error)
             }
         }
     );
@@ -53,7 +53,7 @@ function createNewCard(card, onImagePlaceClicked, onButtonDeleteCardClicked, myI
                     .then(() => {
                         newCard.remove();
                     })
-                    .catch((error) => console.error(error))
+                    .catch(console.error)
             })
         });
     }

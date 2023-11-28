@@ -42,6 +42,7 @@ const fullNamePlace = popupFullCard.querySelector('.popup__caption');
 
 const popupConfirm = document.getElementById('confirm');
 const formConfirm = popupConfirm.querySelector('.popup__form');
+const buttonConfirm = formConfirm.querySelector('.popup__save-button');
 
 const popupProfileAvatar = document.getElementById('profile-avatar');
 const formSaveProfileAvatar = popupProfileAvatar.querySelector('.popup__form');
@@ -91,20 +92,21 @@ formSaveCard.addEventListener('submit', function (event) {
     renderLoading(true, event.submitter);
 
     postRequestCard({
-        name: this.elements.title.value,
-        link: this.elements.link.value
+        name: event.target.elements.title.value,
+        link: event.target.elements.link.value
     })
         .then((card) => {
             addNewCard(card);
+            event.target.reset();
+            event.submitter.disabled = true;
+            closePopup(popupAddCard);
         })
         .catch((error) => {
             console.error(error);
+            event.submitter.disabled = false;
         })
         .finally(() => {
-            this.reset();
-            event.submitter.disabled = true;
             renderLoading(false, event.submitter);
-            closePopup(popupAddCard);
         })
 });
 
@@ -113,19 +115,20 @@ formSaveProfile.addEventListener('submit', function (event) {
     renderLoading(true, event.submitter);
 
     patchRequestUserInfo( {
-        name: this.elements.name.value,
-        about: this.elements.description.value
+        name: event.target.elements.name.value,
+        about: event.target.elements.description.value
     })
         .then((userInfo) => {
             nameProfile.textContent = userInfo.name;
             descriptionProfile.textContent = userInfo.about;
+            closePopup(popupProfile);
         })
         .catch((error) => {
             console.error(error);
+            event.submitter.disabled = false;
         })
         .finally(() => {
             renderLoading(false, event.submitter);
-            closePopup(popupProfile);
         })
 });
 
@@ -134,19 +137,20 @@ formSaveProfileAvatar.addEventListener('submit', function (event) {
     renderLoading(true, event.submitter);
 
     patchRequestUserAvatar({
-        avatar: this.elements.imageUrl.value
+        avatar: event.target.elements.imageUrl.value
     })
         .then((userInfo) => {
             avatarProfile.src = userInfo.avatar;
+            event.target.reset();
+            event.submitter.disabled = true;
+            closePopup(popupProfileAvatar);
         })
         .catch((error) => {
             console.error(error);
+            event.submitter.disabled = false;
         })
         .finally(() => {
-            this.reset();
-            event.submitter.disabled = true;
             renderLoading(false, event.submitter);
-            closePopup(popupProfileAvatar);
         })
 })
 
@@ -179,7 +183,6 @@ function openPopupFullCard(card) {
 }
 
 function openPopupConfirm(onConfirm) {
-    const buttonConfirm = formConfirm.querySelector('.popup__save-button');
     openPopup(popupConfirm);
     setTimeout(() => buttonConfirm.focus(), 100);
 
@@ -190,8 +193,7 @@ function openPopupConfirm(onConfirm) {
     };
 }
 
-setEventListenerOnPopup();
-enableValidation(validationConfig);
-
 loadUserInfo();
 loadCardsList();
+setEventListenerOnPopup();
+enableValidation(validationConfig);

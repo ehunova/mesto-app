@@ -1,3 +1,5 @@
+import {checkResponse} from "./utils";
+
 const config = {
     baseUrl: 'https://nomoreparties.co/v1/wbf-cohort-14',
     headers: {
@@ -11,12 +13,7 @@ function getRequestUserInfo() {
         method: 'GET',
         headers: config.headers
     })
-        .then(resolve => {
-            if (resolve.ok) {
-                return resolve.json();
-            }
-            return Promise.reject(`Ошибка: ${resolve.status}`);
-        })
+        .then(checkResponse)
 }
 
 function patchRequestUserInfo(userInfo) {
@@ -25,12 +22,7 @@ function patchRequestUserInfo(userInfo) {
         headers: config.headers,
         body: JSON.stringify(userInfo)
     })
-        .then(resolve => {
-            if (resolve.ok) {
-                return resolve.json();
-            }
-            return Promise.reject(`Ошибка: ${resolve.status}`);
-        })
+        .then(checkResponse)
 }
 
 function patchRequestUserAvatar(userInfo) {
@@ -39,12 +31,7 @@ function patchRequestUserAvatar(userInfo) {
         headers: config.headers,
         body: JSON.stringify(userInfo)
     })
-        .then(resolve => {
-            if (resolve.ok) {
-                return resolve.json();
-            }
-            return Promise.reject(`Ошибка: ${resolve.status}`);
-        })
+        .then(checkResponse)
 }
 
 function getRequestCards() {
@@ -52,12 +39,7 @@ function getRequestCards() {
         method: 'GET',
         headers: config.headers
     })
-        .then(resolve => {
-            if (resolve.ok) {
-                return resolve.json();
-            }
-            return Promise.reject(`Ошибка: ${resolve.status}`);
-        })
+        .then(checkResponse)
 }
 
 function postRequestCard(card) {
@@ -66,12 +48,7 @@ function postRequestCard(card) {
         headers: config.headers,
         body: JSON.stringify(card)
     })
-        .then(resolve => {
-            if (resolve.ok) {
-                return resolve.json();
-            }
-            return Promise.reject(`Ошибка: ${resolve.status}`);
-        })
+        .then(checkResponse)
 }
 
 function deleteRequestCard(card) {
@@ -80,12 +57,7 @@ function deleteRequestCard(card) {
         headers: config.headers,
         body: JSON.stringify(card)
     })
-        .then(resolve => {
-            if (resolve.ok) {
-                return resolve.json();
-            }
-            return Promise.reject(`Ошибка: ${resolve.status}`);
-        })
+        .then(checkResponse)
 }
 
 function putRequestLike(card) {
@@ -94,12 +66,7 @@ function putRequestLike(card) {
         headers: config.headers,
         body: JSON.stringify(card)
     })
-        .then(resolve => {
-            if (resolve.ok) {
-                return resolve.json();
-            }
-            return Promise.reject(`Ошибка: ${resolve.status}`);
-        })
+        .then(checkResponse)
 }
 
 function deleteRequestLike(card) {
@@ -108,12 +75,7 @@ function deleteRequestLike(card) {
         headers: config.headers,
         body: JSON.stringify(card)
     })
-        .then(resolve => {
-            if (resolve.ok) {
-                return resolve.json();
-            }
-            return Promise.reject(`Ошибка: ${resolve.status}`);
-        })
+        .then(checkResponse)
 }
 
 export {
