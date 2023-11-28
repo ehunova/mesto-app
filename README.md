@@ -37,7 +37,7 @@
 2. Откройте файл `index.html` в вашем веб-браузере:
   ```
   cd mesto-app
-  open index.html
+  npm run dev
   ```
 
 ## Автор

@@ -7,10 +7,12 @@ import {createNewCard} from './components/card.js';
 import {enableValidation} from './components/validate.js';
 
 import {
-    getRequestUserInfo, patchRequestUserAvatar, patchRequestUserInfo,
-    getRequestCards, postRequestCard, deleteRequestCard,
+    getRequestCards,
+    getRequestUserInfo,
+    patchRequestUserAvatar,
+    patchRequestUserInfo,
+    postRequestCard,
 } from './components/api.js';
-import {cardsList} from "./components/cards";
 
 const validationConfig = {
     formSelector: '.popup__form',
@@ -177,9 +179,9 @@ function openPopupFullCard(card) {
 }
 
 function openPopupConfirm(onConfirm) {
-    const confirmInput = formConfirm.querySelector('.popup__save-button');
+    const buttonConfirm = formConfirm.querySelector('.popup__save-button');
     openPopup(popupConfirm);
-    setTimeout(() => confirmInput.focus(), 100);
+    setTimeout(() => buttonConfirm.focus(), 100);
 
     formConfirm.onsubmit = (event) => {
         event.preventDefault();
