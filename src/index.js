@@ -23,17 +23,17 @@ const validationConfig = {
 
 const buttonOpenPopupProfile = document.querySelector('.profile__edit-button');
 const popupProfile = document.getElementById('edit-profile');
-const formSaveProfile = document.forms.edit;
+const formSaveProfile = document.forms['edit'];
 
 const nameProfile = document.querySelector('.profile__name-text');
 const descriptionProfile = document.querySelector('.profile__description');
-const inputNameProfile = formSaveProfile.elements.name;
+const inputNameProfile = formSaveProfile.elements.username;
 const inputDescriptionProfile = formSaveProfile.elements.description;
 
 const buttonAddCard = document.querySelector('.profile__add-button');
 
 const popupAddCard = document.getElementById('add-card');
-const formSaveCard = document.forms.add;
+const formSaveCard = document.forms['add'];
 const cardsBlock = document.querySelector('.cards__list');
 
 const popupFullCard = document.getElementById('full-card');
@@ -41,11 +41,11 @@ const fullImagePlace = popupFullCard.querySelector('.popup__image');
 const fullNamePlace = popupFullCard.querySelector('.popup__caption');
 
 const popupConfirm = document.getElementById('confirm');
-const formConfirm = document.forms.confirm;
+const formConfirm = document.forms['confirm'];
 const buttonConfirm = formConfirm.querySelector('.popup__save-button');
 
 const popupProfileAvatar = document.getElementById('profile-avatar');
-const formSaveProfileAvatar = document.forms.avatar;
+const formSaveProfileAvatar = document.forms['avatar'];
 const buttonOpenPopupAvatar = document.querySelector('.profile__avatar_edit-button');
 const avatarProfile = document.querySelector('.profile__avatar');
 
@@ -88,7 +88,7 @@ formSaveProfile.addEventListener('submit', function (event) {
     renderLoading(true, event.submitter);
 
     patchRequestUserInfo( {
-        name: event.target.elements.name.value,
+        name: event.target.elements.username.value,
         about: event.target.elements.description.value
     })
         .then((userInfo) => {
