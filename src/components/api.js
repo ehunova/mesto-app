@@ -1,11 +1,15 @@
-import {cardsList} from "./cards";
+const config = {
+    baseUrl: 'https://nomoreparties.co/v1/wbf-cohort-14',
+    headers: {
+        authorization: 'd3402cae-2088-4283-905e-98c5f4732bd5',
+        'Content-Type': 'application/json'
+    }
+}
 
 function getRequestUserInfo() {
-    return fetch('https://nomoreparties.co/v1/wbf-cohort-14/users/me', {
+    return fetch(`${config.baseUrl}/users/me`, {
         method: 'GET',
-        headers: {
-            authorization: 'd3402cae-2088-4283-905e-98c5f4732bd5'
-        }
+        headers: config.headers
     })
         .then(resolve => {
             if (resolve.ok) {
@@ -16,12 +20,9 @@ function getRequestUserInfo() {
 }
 
 function patchRequestUserInfo(userInfo) {
-    return fetch('https://nomoreparties.co/v1/wbf-cohort-14/users/me', {
+    return fetch(`${config.baseUrl}/users/me`, {
         method: 'PATCH',
-        headers: {
-            authorization: 'd3402cae-2088-4283-905e-98c5f4732bd5',
-            'Content-Type': 'application/json'
-        },
+        headers: config.headers,
         body: JSON.stringify(userInfo)
     })
         .then(resolve => {
@@ -33,12 +34,9 @@ function patchRequestUserInfo(userInfo) {
 }
 
 function patchRequestUserAvatar(userInfo) {
-    return fetch('https://nomoreparties.co/v1/wbf-cohort-14/users/me/avatar', {
+    return fetch(`${config.baseUrl}/users/me/avatar`, {
         method: 'PATCH',
-        headers: {
-            authorization: 'd3402cae-2088-4283-905e-98c5f4732bd5',
-            'Content-Type': 'application/json'
-        },
+        headers: config.headers,
         body: JSON.stringify(userInfo)
     })
         .then(resolve => {
@@ -50,11 +48,9 @@ function patchRequestUserAvatar(userInfo) {
 }
 
 function getRequestCards() {
-    return fetch('https://nomoreparties.co/v1/wbf-cohort-14/cards', {
+    return fetch(`${config.baseUrl}/cards`, {
         method: 'GET',
-        headers: {
-            authorization: 'd3402cae-2088-4283-905e-98c5f4732bd5'
-        }
+        headers: config.headers
     })
         .then(resolve => {
             if (resolve.ok) {
@@ -65,12 +61,9 @@ function getRequestCards() {
 }
 
 function postRequestCard(card) {
-    return fetch('https://nomoreparties.co/v1/wbf-cohort-14/cards', {
+    return fetch(`${config.baseUrl}/cards`, {
         method: 'POST',
-        headers: {
-            authorization: 'd3402cae-2088-4283-905e-98c5f4732bd5',
-            'Content-Type': 'application/json'
-        },
+        headers: config.headers,
         body: JSON.stringify(card)
     })
         .then(resolve => {
@@ -82,14 +75,45 @@ function postRequestCard(card) {
 }
 
 function deleteRequestCard(card) {
-    return fetch(`https://nomoreparties.co/v1/wbf-cohort-14/cards/${card._id}`, {
+    return fetch(`${config.baseUrl}/cards/${card._id}`, {
         method: 'DELETE',
-        headers: {
-            authorization: 'd3402cae-2088-4283-905e-98c5f4732bd5',
-            'Content-Type': 'application/json'
-        },
+        headers: config.headers,
         body: JSON.stringify(card)
     })
+        .then(resolve => {
+            if (resolve.ok) {
+                return resolve.json();
+            }
+            return Promise.reject(`Ошибка: ${resolve.status}`);
+        })
+}
+
+function putRequestLike(card) {
+    return fetch(`${config.baseUrl}/cards/likes/${card._id}`, {
+        method: 'PUT',
+        headers: config.headers,
+        body: JSON.stringify(card)
+    })
+        .then(resolve => {
+            if (resolve.ok) {
+                return resolve.json();
+            }
+            return Promise.reject(`Ошибка: ${resolve.status}`);
+        })
+}
+
+function deleteRequestLike(card) {
+    return fetch(`${config.baseUrl}/cards/likes/${card._id}`, {
+        method: 'DELETE',
+        headers: config.headers,
+        body: JSON.stringify(card)
+    })
+        .then(resolve => {
+            if (resolve.ok) {
+                return resolve.json();
+            }
+            return Promise.reject(`Ошибка: ${resolve.status}`);
+        })
 }
 
 export {
@@ -99,5 +123,6 @@ export {
     getRequestCards,
     postRequestCard,
     deleteRequestCard,
-
-}
+    putRequestLike,
+    deleteRequestLike,
+};

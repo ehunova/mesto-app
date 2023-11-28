@@ -10,6 +10,7 @@ import {
     getRequestUserInfo, patchRequestUserAvatar, patchRequestUserInfo,
     getRequestCards, postRequestCard, deleteRequestCard,
 } from './components/api.js';
+import {cardsList} from "./components/cards";
 
 const validationConfig = {
     formSelector: '.popup__form',

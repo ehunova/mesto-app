@@ -1,4 +1,4 @@
-import {deleteRequestCard} from "./api";
+import {deleteRequestCard, deleteRequestLike, putRequestLike} from "./api";
 
 const cardTemplate = document.getElementById('card-template').content.querySelector('.card');
 
@@ -9,32 +9,54 @@ function createNewCard(card, onImagePlaceClicked, onButtonDeleteCardClicked, myI
     const imagePlace = newCard.querySelector('.card__image');
     const buttonDeleteCard = newCard.querySelector('.card__delete-button');
     const buttonLikeCard = newCard.querySelector('.card__like-button');
+    const likeCounter = newCard.querySelector('.card__like-counter');
 
     namePlace.textContent = card.name;
     imagePlace.src = card.link;
     imagePlace.alt = card.name;
-
-    if(card.owner._id !== myId) {
-        buttonDeleteCard.remove();
-    }
+    likeCounter.textContent = card.likes.length;
 
     imagePlace.addEventListener('click', () => onImagePlaceClicked(card));
 
+    if (card.likes.some(like => like._id === myId)) {
+        buttonLikeCard.classList.add('card__like-button_active');
+    }
+
     buttonLikeCard.addEventListener(
         'click',
-        () => buttonLikeCard.classList.toggle('card__like-button_active')
+        () => {
+            if (buttonLikeCard.classList.contains('card__like-button_active')) {
+                deleteRequestLike(card)
+                    .then((result) => {
+                        buttonLikeCard.classList.remove('card__like-button_active');
+                        likeCounter.textContent = result.likes.length;
+                    })
+                    .catch((error) => console.error(error))
+            } else {
+                putRequestLike(card)
+                    .then((result) => {
+                        buttonLikeCard.classList.add('card__like-button_active');
+                        likeCounter.textContent = result.likes.length;
+                    })
+                    .catch((error) => console.error(error))
+            }
+        }
     );
 
-    buttonDeleteCard.addEventListener('click', (event) => {
-        event.preventDefault();
-        onButtonDeleteCardClicked(() => {
-            deleteRequestCard(card)
-                .then(() => {
-                    newCard.remove();
-                })
-                .catch((error) => console.error(error))
-        })
-    });
+    if (card.owner._id !== myId) {
+        buttonDeleteCard.remove();
+    } else {
+        buttonDeleteCard.addEventListener('click', (event) => {
+            event.preventDefault();
+            onButtonDeleteCardClicked(() => {
+                deleteRequestCard(card)
+                    .then(() => {
+                        newCard.remove();
+                    })
+                    .catch((error) => console.error(error))
+            })
+        });
+    }
 
     return newCard;
 }
