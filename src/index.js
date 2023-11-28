@@ -50,33 +50,6 @@ const buttonOpenPopupAvatar = document.querySelector('.profile__avatar_edit-butt
 const avatarProfile = document.querySelector('.profile__avatar');
 
 let globalUserInfo = {};
-let globalCardsList = [];
-
-function loadUserInfo() {
-    getRequestUserInfo()
-        .then(userInfo => {
-            globalUserInfo = userInfo;
-            nameProfile.textContent = userInfo.name;
-            descriptionProfile.textContent = userInfo.about;
-            avatarProfile.src = userInfo.avatar;
-        })
-        .catch((error) => {
-            console.error(error);
-        })
-}
-
-function loadCardsList() {
-    getRequestCards()
-        .then(cardsList => {
-            globalCardsList = cardsList;
-            cardsList.reverse().forEach(card => {
-                addNewCard(card);
-            });
-        })
-        .catch((error) => {
-            console.error(error);
-        })
-}
 
 function renderLoading(isLoading, element) {
     element.textContent = 'Сохранить';
@@ -193,7 +166,18 @@ function openPopupConfirm(onConfirm) {
     };
 }
 
-loadUserInfo();
-loadCardsList();
+Promise.all([getRequestUserInfo(), getRequestCards()])
+    .then(([userInfo, cardsList]) => {
+        globalUserInfo = userInfo;
+        nameProfile.textContent = userInfo.name;
+        descriptionProfile.textContent = userInfo.about;
+        avatarProfile.src = userInfo.avatar;
+
+        cardsList.reverse().forEach(card => {
+            addNewCard(card);
+        });
+    })
+    .catch(console.error);
+
 setEventListenerOnPopup();
 enableValidation(validationConfig);
