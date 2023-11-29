@@ -172,9 +172,7 @@ Promise.all([getRequestUserInfo(), getRequestCards()])
         descriptionProfile.textContent = userInfo.about;
         avatarProfile.src = userInfo.avatar;
 
-        cardsList.reverse().forEach(card => {
-            addNewCard(card);
-        });
+        cardsList.reverse().forEach(addNewCard);
     })
     .catch(console.error);
 
