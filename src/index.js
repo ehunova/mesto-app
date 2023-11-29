@@ -161,11 +161,7 @@ function openPopupConfirm(onConfirm) {
 
     formConfirm.onsubmit = (event) => {
         event.preventDefault();
-        onConfirm()
-            .then(() => {
-                closePopup(popupConfirm);
-            })
-            .catch(console.error);
+        onConfirm(() => closePopup(popupConfirm));
     };
 }
 

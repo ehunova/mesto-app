@@ -48,14 +48,13 @@ function createNewCard(card, onImagePlaceClicked, onButtonDeleteCardClicked, myI
     } else {
         buttonDeleteCard.addEventListener('click', (event) => {
             event.preventDefault();
-            onButtonDeleteCardClicked(() => {
-                return deleteRequestCard(card)
+            onButtonDeleteCardClicked((onSuccess) => {
+                deleteRequestCard(card)
                     .then(() => {
+                        onSuccess();
                         newCard.remove();
                     })
-                    .catch((error) => {
-                        return Promise.reject(error);
-                    })
+                    .catch(console.error);
             })
         });
     }

@@ -1,8 +1,8 @@
-function checkResponse(resolve) {
-    if (resolve.ok) {
-        return resolve.json();
+function checkResponse(response) {
+    if (response.ok) {
+        return response.json();
     }
-    return Promise.reject(`Ошибка: ${resolve.status}`);
+    return Promise.reject(`Ошибка: ${response.status}`);
 }
 
 export {
